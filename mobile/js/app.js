@@ -90,6 +90,48 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function showMobileAlert(title, message, onOk) {
+        const modal = document.getElementById('mobile-alert-modal');
+        document.getElementById('mobile-alert-title').textContent = title;
+        document.getElementById('mobile-alert-desc').textContent = message;
+        
+        const btnOk = document.getElementById('mobile-alert-ok');
+        const newOk = btnOk.cloneNode(true);
+        btnOk.parentNode.replaceChild(newOk, btnOk);
+        
+        modal.classList.add('active');
+        
+        newOk.addEventListener('click', () => {
+            modal.classList.remove('active');
+            if (onOk) onOk();
+        });
+    }
+
+    function showMobileConfirm(title, message, onConfirm) {
+        const modal = document.getElementById('mobile-confirm-modal');
+        document.getElementById('mobile-confirm-title').textContent = title;
+        document.getElementById('mobile-confirm-desc').textContent = message;
+        
+        const btnCancel = document.getElementById('mobile-confirm-cancel');
+        const btnConfirm = document.getElementById('mobile-confirm-ok');
+        
+        const newCancel = btnCancel.cloneNode(true);
+        const newConfirm = btnConfirm.cloneNode(true);
+        btnCancel.parentNode.replaceChild(newCancel, btnCancel);
+        btnConfirm.parentNode.replaceChild(newConfirm, btnConfirm);
+        
+        modal.classList.add('active');
+        
+        newCancel.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+        
+        newConfirm.addEventListener('click', () => {
+            modal.classList.remove('active');
+            if (onConfirm) onConfirm();
+        });
+    }
+
     function showToast(msg) {
         toast.textContent = msg;
         toast.classList.add('show');
@@ -108,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Validation & Defaults
         if (isNaN(amount) || amount <= 0) {
-            alert("Please enter a valid amount.");
+            showMobileAlert("Invalid Amount", "Please enter a valid amount greater than zero.");
             return;
         }
 
@@ -117,9 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!desc) desc = otherInput.value.trim();
         }
 
-        if (!desc) {
-            desc = type === 'income' ? 'Income' : category;
-        }
+        // Removed fallback logic so description stays blank if empty
 
         // Net Balance Check for Expenses
         if (type === 'expense') {
@@ -129,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 0);
             
             if (amount > netBalance) {
-                alert("Insufficient Balance!");
+                showMobileAlert("Insufficient Balance", "Your current balance is not enough to cover this expense.");
                 return;
             }
         }
@@ -165,12 +205,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Global Delete Handler for HTML nodes
     window.handleMobileDelete = function(id) {
-        if(confirm("Delete this transaction?")) {
+        showMobileConfirm("Delete Transaction", "Are you sure you want to delete this transaction?", () => {
             deleteTransaction(id);
             updateDashboard();
             renderList();
             showToast("Transaction Deleted");
-        }
+        });
     }
 
     function updateDashboard() {
@@ -218,8 +258,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             noDataDiv.classList.add('hidden');
             txList.innerHTML = transactions.map(t => {
-                const pSign = t.type === 'income' ? '+' : '-';
-                
                 let initial = t.category.charAt(0).toUpperCase();
                 if (t.category.startsWith('Others - ')) {
                     initial = t.category.replace('Others - ', '').charAt(0).toUpperCase();
@@ -239,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="tx-subtitle" style="margin-top:2px;">${dateStr} ${timeStr} • ${t.type}</div>
                     </div>
                     <div class="tx-right">
-                        <div class="tx-amount ${t.type}">${pSign}${formatCurrency(t.amount)}</div>
+                        <div class="tx-amount ${t.type}">${formatCurrency(t.amount)}</div>
                         <button class="btn-delete-mobile" onclick="window.handleMobileDelete('${t.id}')">Delete</button>
                     </div>
                 </div>

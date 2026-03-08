@@ -76,10 +76,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const labels = Object.keys(categoryData);
             const dataMap = Object.values(categoryData);
 
-            // Generate some colors
+            // Generate some colors identical to desktop version
             const colors = [
-                '#ef4444', '#f59e0b', '#10b981', '#3b82f6', 
-                '#8b5cf6', '#ec4899', '#14b8a6', '#f97316'
+                '#ef4444', '#f59e0b', '#3b82f6', '#10b981', 
+                '#8b5cf6', '#ec4899', '#14b8a6', '#f97316', '#6366f1'
             ];
 
             expenseChart = new Chart(ctx, {
@@ -89,7 +89,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     datasets: [{
                         data: dataMap,
                         backgroundColor: colors.slice(0, labels.length),
-                        borderWidth: 2,
+                        borderWidth: 1,
+                        borderColor: '#ffffff',
                         hoverOffset: 4
                     }]
                 },

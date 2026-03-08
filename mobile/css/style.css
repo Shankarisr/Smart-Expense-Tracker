@@ -262,6 +262,86 @@ app-header h1 {
     background: var(--primary-light);
 }
 
+/* Custom Dialog Modals (Centered) */
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.dialog-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.dialog-content {
+    background: var(--card-bg);
+    width: 85%;
+    max-width: 320px;
+    border-radius: 20px;
+    padding: 24px;
+    text-align: center;
+    transform: translateY(-20px) scale(0.95);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.dialog-overlay.active .dialog-content {
+    transform: translateY(0) scale(1);
+}
+
+.dialog-content h3 {
+    font-size: 1.2rem;
+    color: var(--text-main);
+    margin-bottom: 8px;
+}
+
+.dialog-content p {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    line-height: 1.4;
+}
+
+.dialog-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.dialog-actions button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.btn-dialog-cancel {
+    background: var(--bg);
+    color: var(--text-main);
+}
+
+.btn-dialog-confirm {
+    background: var(--expense);
+    color: white;
+}
+
+.btn-dialog-ok {
+    background: var(--primary);
+    color: white;
+}
+
 /* Transaction List (Mobile Cards) */
 .transaction-list {
     display: flex;
