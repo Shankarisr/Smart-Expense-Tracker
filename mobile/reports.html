@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Reports - Mobile Tracker</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+
+    <app-header>
+        <h1>Monthly Reports</h1>
+    </app-header>
+
+    <div class="section">
+        <div class="form-group" style="margin-bottom: 24px;">
+            <select id="month-selector"
+                style="font-weight: 600; font-size: 1.1rem; text-align: center; border:none; box-shadow: 0 1px 3px rgba(0,0,0,0.1);"></select>
+        </div>
+
+        <div
+            style="background: var(--card-bg); padding: 20px; border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 24px;">
+            <h3 style="text-align: center; margin-bottom: 16px; font-size: 1rem; color: var(--text-muted);">Expense
+                Breakdown</h3>
+            <div style="position: relative; height: 300px; width: 100%;">
+                <canvas id="expense-pie-chart"></canvas>
+            </div>
+            <div id="no-data-msg" class="text-center hidden" style="margin-top: 20px;">
+                No expenses recorded for this month.
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="summary-card" style="flex-direction: column; align-items: flex-start; padding: 16px;">
+                <div class="card-label">Total Income</div>
+                <div class="card-amount" id="stat-income" style="font-size: 1.2rem; color: var(--income);">₹0</div>
+            </div>
+            <div class="summary-card" style="flex-direction: column; align-items: flex-start; padding: 16px;">
+                <div class="card-label">Total Expenses</div>
+                <div class="card-amount" id="stat-expense" style="font-size: 1.2rem; color: var(--expense);">₹0</div>
+            </div>
+            <div class="summary-card" style="flex-direction: column; align-items: flex-start; padding: 16px;">
+                <div class="card-label">Highest Spend</div>
+                <div class="card-amount" id="stat-highest" style="font-size: 1.1rem;">-</div>
+            </div>
+            <div class="summary-card" style="flex-direction: column; align-items: flex-start; padding: 16px;">
+                <div class="card-label">Transactions</div>
+                <div class="card-amount" id="stat-count" style="font-size: 1.2rem;">0</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <span class="nav-icon">🏠</span>
+            Dashboard
+        </a>
+        <a href="reports.html" class="nav-item active">
+            <span class="nav-icon">📊</span>
+            Reports
+        </a>
+        <a href="analytics.html" class="nav-item">
+            <span class="nav-icon">📈</span>
+            Analytics
+        </a>
+    </nav>
+
+    <script src="js/storage.js"></script>
+    <script src="js/charts.js"></script>
+</body>
+
+</html>
