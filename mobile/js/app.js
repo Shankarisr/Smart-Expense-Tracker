@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const addModal = document.getElementById('add-modal');
     const btnModalClose = document.getElementById('btn-modal-close');
     const toast = document.getElementById('toast');
+    const btnReset = document.getElementById('btn-reset');
 
     let currentMonthYear = getMonthYearStr(new Date().toISOString().split('T')[0]);
 
@@ -60,6 +61,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 form.reset();
             }
         });
+
+        if (btnReset) {
+            btnReset.addEventListener('click', () => {
+                showMobileConfirm("Reset All Data", "Are you sure you want to completely erase all transactions? This cannot be undone.", () => {
+                    const { clearAllData } = window.StorageModule;
+                    clearAllData();
+                    location.reload();
+                });
+            });
+        }
 
         updateDashboard();
         renderList();
