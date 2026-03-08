@@ -42,6 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Modal Logic
         fabButton.addEventListener('click', () => {
             setupFormDefaults(); // reset to today
+            // Enforce default type as expense and update categories
+            typeSelect.value = 'expense';
+            updateCategoryOptions();
             addModal.classList.add('active');
         });
 

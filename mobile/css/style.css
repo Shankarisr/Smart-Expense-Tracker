@@ -59,22 +59,24 @@ app-header h1 {
     font-weight: 700;
 }
 
-/* Summary Cards (Mobile Stacked) */
+/* Summary Cards (Mobile Horizontal) */
 .summary-cards {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 12px;
     padding: 0 20px 20px;
 }
 
 .summary-card {
     background: var(--card-bg);
-    padding: 20px 24px;
+    padding: 16px 12px;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
 .summary-card:active {
@@ -84,13 +86,15 @@ app-header h1 {
 }
 
 .card-label {
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     color: var(--text-muted);
-    font-weight: 500;
+    font-weight: 600;
+    margin-bottom: 6px;
+    line-height: 1.1;
 }
 
 .card-amount {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     font-weight: 800;
     color: var(--text-main);
 }
