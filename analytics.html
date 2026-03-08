@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Analytics - Smart Personal Expense Tracker</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Smart Expense Tracker</h1>
+            <nav>
+                <a href="index.html">Dashboard</a>
+                <a href="reports.html">Monthly Reports</a>
+                <a href="analytics.html" class="active">Daily Analytics</a>
+                <button id="btn-reset" class="btn-delete" style="margin-left:auto;">Reset Data</button>
+            </nav>
+        </header>
+
+        <div class="section" style="max-width: 900px; margin: 0 auto;">
+            <h2>
+                Daily Spending Trends
+                <select id="month-selector" class="month-selector"></select>
+            </h2>
+
+            <div class="highlights">
+                <div class="highlight-card">
+                    <p>Highest Spending Day</p>
+                    <h4 id="high-day">-</h4>
+                </div>
+                <div class="highlight-card">
+                    <p>Average Daily Spend</p>
+                    <h4 id="avg-spend">₹0</h4>
+                </div>
+            </div>
+
+            <div class="chart-box" style="margin-top: 24px;">
+                <canvas id="barChart"></canvas>
+            </div>
+            <div id="no-data-msg" class="text-center hidden">No expenses found for this month.</div>
+        </div>
+    </div>
+
+    <!-- Custom Confirmation Modal -->
+    <div class="modal-overlay" id="confirm-modal">
+        <div class="modal-content">
+            <h3 id="modal-title">Confirm Action</h3>
+            <p id="modal-desc">Are you sure you want to proceed?</p>
+            <div class="modal-actions">
+                <button class="btn-cancel" id="modal-cancel">Cancel</button>
+                <button class="btn-confirm-delete" id="modal-confirm">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/analytics.js"></script>
+</body>
+
+</html>
