@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search');
     const monthSelector = document.getElementById('dashboard-month-selector');
     const btnReset = document.getElementById('btn-reset');
+    const btnToggleHistory = document.getElementById('btn-toggle-history');
+    const historySection = document.getElementById('history-section');
 
     let selectedMonthYear = '';
 
@@ -51,6 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     clearAllData();
                     location.reload();
                 });
+            });
+        }
+
+        if (btnToggleHistory && historySection) {
+            btnToggleHistory.addEventListener('click', () => {
+                const isHidden = historySection.classList.toggle('hidden');
+                btnToggleHistory.textContent = isHidden ? 'View Transaction History' : 'Hide Transaction History';
             });
         }
 
