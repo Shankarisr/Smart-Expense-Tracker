@@ -263,8 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderTable() {
         let transactions = getTransactions();
-        // Since we changed the HTML container id to 'transactions-list' we update the reference
-        const listContainer = document.getElementById('transactions-list');
+        const tbody = document.getElementById('table-body');
         const noDataDiv = document.getElementById('no-data');
         const searchQuery = searchInput.value.toLowerCase();
         
@@ -290,37 +289,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if(transactions.length === 0) {
-            listContainer.innerHTML = '';
+            tbody.innerHTML = '';
             noDataDiv.classList.remove('hidden');
         } else {
             noDataDiv.classList.add('hidden');
-            listContainer.innerHTML = transactions.map(t => {
+            tbody.innerHTML = transactions.map(t => {
                 const dateObj = new Date(`${t.date}T${t.time || '00:00'}`);
-                const dateStr = dateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }) + ', ' + dateObj.toLocaleTimeString('en-GB', {hour: '2-digit', minute:'2-digit'});
+                const dateStr = dateObj.toLocaleDateString('en-GB') + ' ' + dateObj.toLocaleTimeString('en-GB', {hour: '2-digit', minute:'2-digit'});
                 const pSign = t.type === 'income' ? '+' : '-';
+                const moneyColor = t.type === 'income' ? 'var(--success)' : 'var(--danger)';
                 
-                // Get first letter of category for the avatar
-                let initial = t.category.charAt(0).toUpperCase();
-                if (t.category.startsWith('Others - ')) {
-                    initial = t.category.replace('Others - ', '').charAt(0).toUpperCase();
-                }
-
                 return `
-                <div class="tx-card">
-                    <div class="tx-avatar ${t.type}">
-                        ${initial}
-                    </div>
-                    <div class="tx-details">
-                        <div class="tx-title">${t.category}</div>
-                        <div class="tx-subtitle">${dateStr} • ${t.description}</div>
-                    </div>
-                    <div class="tx-right">
-                        <div class="tx-amount ${t.type}">${pSign}₹${t.amount.toLocaleString('en-IN')}</div>
-                        <button class="btn-delete-icon" onclick="window.handleDeleteTransaction('${t.id}')">
-                            <span style="font-size: 1.2rem;">×</span>
-                        </button>
-                    </div>
-                </div>
+                <tr>
+                    <td>${dateStr}</td>
+                    <td><span class="badge ${t.type}">${t.type}</span></td>
+                    <td>${t.category}</td>
+                    <td>${t.description}</td>
+                    <td style="font-weight: 600; color: ${moneyColor}">
+                        ${pSign}₹${t.amount.toLocaleString('en-IN')}
+                    </td>
+                    <td><button class="btn-delete" onclick="window.handleDeleteTransaction('${t.id}')">Delete</button></td>
+                </tr>
                 `;
             }).join('');
         }
